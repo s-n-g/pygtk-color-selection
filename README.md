@@ -36,7 +36,7 @@ Finally, this is its help screen:
 ```
 $ pygtk-color-chooser -h
 usage: pygtk-color-chooser [-h] [-e] [-r] [-a] [-t TITLE] [-i ICON]
-                           [-o OK_LABEL] [-c CANCEL_LABEL]
+                           [-o OK_LABEL] [-c CANCEL_LABEL] [-p PICK_LABEL]
                            [color]
 
 A Gtk Color Chooser to be used in scripts. It will print the selected color
@@ -61,6 +61,8 @@ optional arguments:
                         set ok button label
   -c CANCEL_LABEL, --cancel-label CANCEL_LABEL
                         set cancel button label
+  -p PICK_LABEL, --pick-label PICK_LABEL
+                        set pick button label
 ```
 
 
