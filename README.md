@@ -15,7 +15,9 @@ Both scripts
 
 ## 1. pygtk-color-chooser
 
-The first script displays a Gtk color chooser window (no color picker available). Clicking the `+` button will open the `color editor`.
+The first script displays a Gtk color chooser window. Clicking the `+` button will open the `color editor`.
+
+If the program [xcolor](https://github.com/Soft/xcolor) (a lightweight color picker for X11) is installed, color picking functionality is enabled (an extra button is added to the window to this end).
 
 The window can be localized (using the **-t**, **-o** and **-c** command line parameters and the `LANG=xx_YY.UTF8` locale setting as shown in the image below).
 
@@ -24,6 +26,10 @@ The window can be localized (using the **-t**, **-o** and **-c** command line pa
 When a starting color is passed to the script, the `color editor` will load automatically, as shown in the image below.
 
 ![pygtk-color-chooser-editor.png](pygtk-color-chooser-editor.png)
+
+As already stated, when `xcolor` is available a `Pick a color` button appears to provide the color picker functionality, as shown in the following animation.
+
+![pygtk-color-chooser-xcolor.gif](pygtk-color-chooser-xcolor.gif)
 
 Finally, this is its help screen:
 
