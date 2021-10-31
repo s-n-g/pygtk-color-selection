@@ -1,0 +1,59 @@
+#!/bin/env python
+from sys import exit
+import gi
+from os import path
+from argparse import ArgumentParser
+
+def rgba_to_hex(rgba):
+    r = rgba.replace('rgb(', '')
+    r = r.replace(')', '')
+    sp = r.split(',')
+    return rgb_to_hex(int(sp[0]), int(sp[1]), int(sp[2]))
+
+def rgb_to_hex(red, green, blue):
+    """Return color as #rrggbb for the given color values."""
+    return '#%02x%02x%02x' % (red, green, blue)
+
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk, Gdk
+# from gi.repository import Gtk
+# from gi.repository import Gdk
+
+parser = ArgumentParser(description=r'A Gtk Color Selector with Color Picker to be used in scripts. It will print the selected color value to stdout (will print nothing if Cancel is clicked) and terminate.')
+
+parser.add_argument('-r', '--rgb', default=False, action='store_true',
+                    help='print color in rgb format instead of HTML')
+parser.add_argument('-a', '--rgba', default=False, action='store_true',
+                    help='print color in rgba format instead of HTML')
+parser.add_argument('-i', '--icon', default=None,
+                    help='set window icon')
+parser.add_argument('color', default='', nargs='?', type=str,
+                    help='Specify a default color. This can be in any of the following formats: CSS name, HTML, RGB or RGBA. If the color value is invalid, it will be ignored.')
+args = parser.parse_args()
+
+def exit_it(button):
+    exit()
+window = Gtk.ColorSelectionDialog()
+window.props.cancel_button.connect('clicked', exit_it)
+
+if args.icon:
+    from os.path import exists
+    if exists(args.icon):
+        Gtk.Window.set_icon_from_file(window, args.icon)
+
+if args.color:
+    a_col = Gdk.RGBA(0, 0, 0, 0)
+    if Gdk.RGBA.parse(a_col, args.color):
+        window.props.color_selection.set_current_rgba(a_col)
+ret = window.run()
+if ret == Gtk.ResponseType.OK:
+    col = window.props.color_selection.get_current_rgba()
+    if args.rgb:
+        print(Gdk.RGBA.to_string(col))
+    elif args.rgba:
+        print(Gdk.RGBA.to_string(col).replace('rgb(', 'rgba(').replace(')', ',1)'))
+    else:
+        print(rgba_to_hex(Gdk.RGBA.to_string(col)))
+
+exit()
+
